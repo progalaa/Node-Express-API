@@ -1,14 +1,17 @@
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const express = require('express');
 const router = express.Router();
 const {Genre} = require('../models/genre');
 
 
   router.get('/', async (req, res) => {
+    throw new Error('Could nor get the genres');
     const genres = await Genre.find().sort('name');
-    res.send(genres);
+      res.send(genres);
   });
   
-  router.post('/', async (req, res) => {
+  router.post('/', auth, async (req, res) => {
     const genre = new Genre({ name: req.body.name });
     genre = await genre.save();
     res.send(genre);
@@ -25,7 +28,7 @@ const {Genre} = require('../models/genre');
     res.send(genre);
   });
   
-  router.delete('/:id', async (req, res) => {
+  router.delete('/:id', [auth, admin], async (req, res) => {
     const genre = await Genre.findByIdAndRemove(req.params.id);
     if (!genre) return res.status(404).send('The genre with the given ID was not found.');
     
