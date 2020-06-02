@@ -1,5 +1,5 @@
 const winston = require('winston');
-require('winston-mongodb');
+// require('winston-mongodb');
 require('express-async-errors'); // used for logging errors check error.js
 
 module.exports = function() {
@@ -16,5 +16,5 @@ module.exports = function() {
     });
 
     winston.add(winston.transports.File, {filename: 'logfile.log'}); // add errors to logfile.
-    winston.add(winston.transports.MongoDB, {db: 'mongodb://localhost/vidly'}); // add errors to mongodb.
+    // winston.add(winston.transports.MongoDB, {db: 'mongodb://localhost/vidly'}); // add errors to mongodb.
 }
